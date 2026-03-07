@@ -2,6 +2,7 @@
 // App — Root Component (Three-Panel Layout)
 // ============================================================
 
+/// <reference types="vite/client" />
 import React, { useState, useCallback } from 'react';
 import type { SolverResult, SolverAlgorithm, LibraryPuzzle } from '@cryptarithmetic/shared';
 import { PuzzleLibrary } from './components/PuzzleLibrary';
@@ -34,9 +35,25 @@ export function App() {
                 });
                 setResult(res);
             } else {
-                // Direct call (Vite dev server / web mode)
-                const res = solvePuzzleDirect(expression.trim(), algorithm, maxSolutions);
-                setResult(res);
+                // Direct call (Vite dev server) or API call (Vercel production web mode)
+                if (import.meta.env.PROD) {
+                    const response = await fetch('/api/solve', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            expression: expression.trim(),
+                            algorithm,
+                            maxSolutions
+                        })
+                    });
+                    const res = await response.json();
+                    setResult(res);
+                } else {
+                    const res = solvePuzzleDirect(expression.trim(), algorithm, maxSolutions);
+                    setResult(res);
+                }
             }
         } catch (err) {
             setResult({
