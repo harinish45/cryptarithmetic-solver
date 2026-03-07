@@ -16,6 +16,7 @@
         "outDir": "./dist",
         "rootDir": "./src"
     },
+    "files": [],
     "references": [
         {
             "path": "./packages/shared"
@@ -24,7 +25,10 @@
             "path": "./packages/solver-core"
         },
         {
-            "path": "./packages/electron-app"
+            "path": "./packages/electron-app/tsconfig.json"
+        },
+        {
+            "path": "./packages/electron-app/tsconfig.main.json"
         }
     ]
 }
