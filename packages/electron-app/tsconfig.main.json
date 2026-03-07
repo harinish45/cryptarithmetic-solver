@@ -14,7 +14,14 @@
         "declaration": true,
         "sourceMap": true,
         "outDir": "./dist/main",
-        "rootDir": "./src/main"
+        "rootDir": "./src/main",
+        "types": [
+            "node"
+        ],
+        "typeRoots": [
+            "./node_modules/@types",
+            "../../node_modules/@types"
+        ]
     },
     "include": [
         "src/main/**/*"
