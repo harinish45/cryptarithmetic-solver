@@ -1,0 +1,1 @@
+﻿src/main/worker.ts(6,29): error TS2307: Cannot find module '@cryptarithmetic/solver-core' or its corresponding type declarations.

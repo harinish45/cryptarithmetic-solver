@@ -1,0 +1,23 @@
+{
+  "name": "cryptarithmetic-solver",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cross-platform Cryptarithmetic Problem Solver with Electron desktop app",
+  "workspaces": [
+    "packages/shared",
+    "packages/solver-core",
+    "packages/electron-app"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "build:core": "npm run build -w packages/solver-core",
+    "build:app": "npm run build -w packages/electron-app",
+    "dev": "npm run dev -w packages/electron-app",
+    "test": "npm run test -w packages/solver-core",
+    "lint": "eslint packages/*/src/**/*.{ts,tsx}"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/node": "^20.11.0"
+  }
+}

@@ -1,0 +1,11 @@
+
+FAIL packages/solver-co
+re/__tests__/solver.tes
+t.ts (13.022 s)
+Test Suites: 1 failed, 
+1 total
+Tests:       2 failed, 
+20 passed, 22 total
+
+
+

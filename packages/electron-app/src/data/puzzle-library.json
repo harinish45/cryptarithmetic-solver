@@ -1,0 +1,162 @@
+[
+    {
+        "id": "classic-01",
+        "title": "SEND + MORE = MONEY",
+        "expression": "SEND + MORE = MONEY",
+        "difficulty": "hard",
+        "category": "Classic",
+        "knownSolutionCount": 1
+    },
+    {
+        "id": "classic-02",
+        "title": "BASE + BALL = GAMES",
+        "expression": "BASE + BALL = GAMES",
+        "difficulty": "hard",
+        "category": "Classic",
+        "knownSolutionCount": 2
+    },
+    {
+        "id": "classic-03",
+        "title": "CROSS + ROADS = DANGER",
+        "expression": "CROSS + ROADS = DANGER",
+        "difficulty": "hard",
+        "category": "Classic",
+        "knownSolutionCount": 1
+    },
+    {
+        "id": "classic-04",
+        "title": "DONALD + GERALD = ROBERT",
+        "expression": "DONALD + GERALD = ROBERT",
+        "difficulty": "hard",
+        "category": "Classic",
+        "knownSolutionCount": 1
+    },
+    {
+        "id": "easy-01",
+        "title": "A + B = C",
+        "expression": "A + B = C",
+        "difficulty": "easy",
+        "category": "Simple",
+        "knownSolutionCount": 26
+    },
+    {
+        "id": "easy-02",
+        "title": "AB + C = DE",
+        "expression": "AB + C = DE",
+        "difficulty": "easy",
+        "category": "Simple",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "easy-03",
+        "title": "NO + GUN = HUNT",
+        "expression": "NO + GUN = HUNT",
+        "difficulty": "easy",
+        "category": "Simple",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "easy-04",
+        "title": "NO + NO = BIG",
+        "expression": "NO + NO = BIG",
+        "difficulty": "easy",
+        "category": "Simple",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "medium-01",
+        "title": "EAT + THAT = APPLE",
+        "expression": "EAT + THAT = APPLE",
+        "difficulty": "medium",
+        "category": "Words",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "medium-02",
+        "title": "TO + GO = OUT",
+        "expression": "TO + GO = OUT",
+        "difficulty": "medium",
+        "category": "Words",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "medium-03",
+        "title": "GREEN + ORANGE = COLORS",
+        "expression": "GREEN + ORANGE = COLORS",
+        "difficulty": "hard",
+        "category": "Words",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "medium-04",
+        "title": "COCA + COLA = OASIS",
+        "expression": "COCA + COLA = OASIS",
+        "difficulty": "medium",
+        "category": "Words",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "medium-05",
+        "title": "WRONG + WRONG = RIGHT",
+        "expression": "WRONG + WRONG = RIGHT",
+        "difficulty": "medium",
+        "category": "Words",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "multi-01",
+        "title": "NO + NO + TOO = LATE",
+        "expression": "NO + NO + TOO = LATE",
+        "difficulty": "medium",
+        "category": "Multi-operand",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "multi-02",
+        "title": "I + AM = ME",
+        "expression": "I + AM = ME",
+        "difficulty": "easy",
+        "category": "Multi-operand",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "multi-03",
+        "title": "HE + HE = SHE",
+        "expression": "HE + HE = SHE",
+        "difficulty": "easy",
+        "category": "Multi-operand",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "medium-06",
+        "title": "TWO + TWO = FOUR",
+        "expression": "TWO + TWO = FOUR",
+        "difficulty": "medium",
+        "category": "Words",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "medium-07",
+        "title": "USA + USSR = PEACE",
+        "expression": "USA + USSR = PEACE",
+        "difficulty": "medium",
+        "category": "Words",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "easy-05",
+        "title": "SUN + FUN = SWIM",
+        "expression": "SUN + FUN = SWIM",
+        "difficulty": "easy",
+        "category": "Simple",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "hard-01",
+        "title": "MATH + MATH = CRAZY",
+        "expression": "MATH + MATH = CRAZY",
+        "difficulty": "hard",
+        "category": "Words",
+        "knownSolutionCount": null
+    }
+]

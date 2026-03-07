@@ -1,0 +1,103 @@
+node.exe : PASS package
+s/solver-core/__tests__
+/solver.test.ts
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: (PASS packages   
+ /s.../solver.test.    
+ts:String) [], Rem    
+oteException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+  tokenizer
+    Gùï skipped 
+tokenizes a simple 
+addition expression
+    Gùï skipped 
+auto-uppercases 
+lowercase input
+    Gùï skipped 
+rejects invalid 
+characters
+    Gùï skipped 
+rejects empty input
+    Gùï skipped 
+tokenizes 
+multiplication 
+expression
+  parser
+    Gùï skipped parses 
+SEND + MORE = MONEY
+    Gùï skipped 
+rejects missing equals
+    Gùï skipped 
+rejects mixed operators
+    Gùï skipped 
+rejects > 10 unique 
+letters
+    Gùï skipped 
+extracts leading 
+letters correctly
+    Gùï skipped 
+handles three operands
+  solver GÇö SEND + 
+MORE = MONEY
+    Gùï skipped solves 
+correctly with 
+brute-force
+    Gùï skipped solves 
+correctly with 
+backtracking
+    Gùï skipped solves 
+correctly with hybrid
+    Gùï skipped solves 
+correctly with ac3
+  solver GÇö edge cases
+    GêÜ single-letter 
+operands: A + B = C (7 
+ms)
+    Gùï skipped puzzle 
+with no solution 
+returns success: false
+    Gùï skipped 
+multi-solution puzzle 
+discovers multiple 
+solutions
+    Gùï skipped 
+invalid expression 
+returns error
+    Gùï skipped 
+leading letters are 
+never zero
+  solver GÇö 
+performance
+    Gùï skipped SEND + 
+MORE = MONEY solves in 
+< 2000ms (hybrid)
+    Gùï skipped 
+returns valid stats
+
+Test Suites: 1 passed, 
+1 total
+Tests:       21 
+skipped, 1 passed, 22 
+total
+Snapshots:   0 total
+Time:        0.783 s, 
+estimated 1 s
+Ran all test suites 
+with tests matching 
+"single-letter".
+

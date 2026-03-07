@@ -1,0 +1,8 @@
+node_modules/
+dist/
+out/
+.webpack/
+*.tsbuildinfo
+.env
+.DS_Store
+Thumbs.db

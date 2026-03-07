@@ -1,0 +1,107 @@
+node.exe : PASS package
+s/solver-core/__tests__
+/solver.test.ts 
+(10.587 s)
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: (PASS packages   
+ /s...t.ts (10.587     
+s):String) [], Rem    
+oteException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+  tokenizer
+    Gъм tokenizes a 
+simple addition 
+expression (4 ms)
+    Gъм 
+auto-uppercases 
+lowercase input (1 ms)
+    Gъм rejects 
+invalid characters (13 
+ms)
+    Gъм rejects empty 
+input (1 ms)
+    Gъм tokenizes 
+multiplication 
+expression
+  parser
+    Gъм parses SEND + 
+MORE = MONEY (1 ms)
+    Gъм rejects 
+missing equals (2 ms)
+    Gъм rejects mixed 
+operators (1 ms)
+    Gъм rejects > 10 
+unique letters (1 ms)
+    Gъм extracts 
+leading letters 
+correctly (1 ms)
+    Gъм handles three 
+operands
+  solver GЧі SEND + 
+MORE = MONEY
+    Gъм solves 
+correctly with 
+backtracking (1754 ms)
+    Gъм solves 
+correctly with hybrid 
+(1793 ms)
+    Gъм solves 
+correctly with ac3 
+(1750 ms)
+  solver GЧі 
+brute-force baseline
+    Gъм solves A + B = 
+C with brute-force (4 
+ms)
+    Gъм brute-force 
+matches backtracking 
+on A + B = C (2 ms)
+  solver GЧі edge cases
+    Gъм single-letter 
+operands: A + B = C (3 
+ms)
+    Gъм puzzle with no 
+solution returns 
+success: false
+    Gъм multi-solution 
+puzzle discovers 
+multiple solutions (1 
+ms)
+    Gъм invalid 
+expression returns 
+error
+    Gъм leading 
+letters are never zero 
+(33 ms)
+  solver GЧі 
+performance
+    Gъм SEND + MORE = 
+MONEY solves in < 
+5000ms (hybrid) (1716 
+ms)
+    Gъм returns valid 
+stats (1758 ms)
+
+Test Suites: 1 passed, 
+1 total
+Tests:       23 
+passed, 23 total
+Snapshots:   0 total
+Time:        10.906 s, 
+estimated 11 s
+Ran all test suites.
+
