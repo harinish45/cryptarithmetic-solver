@@ -19,7 +19,12 @@
     "lint": "eslint packages/*/src/**/*.{ts,tsx}"
   },
   "devDependencies": {
-    "typescript": "^5.4.0",
-    "@types/node": "^20.11.0"
+    "@types/caseless": "^0.12.5",
+    "@types/geojson": "^7946.0.16",
+    "@types/node": "^20.11.0",
+    "@types/request": "^2.48.13",
+    "@types/retry": "^0.12.5",
+    "@types/tough-cookie": "^4.0.5",
+    "typescript": "^5.4.0"
   }
 }

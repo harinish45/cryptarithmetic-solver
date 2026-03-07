@@ -1,13 +1,16 @@
+import dotenv from 'dotenv';
+import path from 'path';
+
+// Load environment variables immediately
+dotenv.config();
+console.log("[DEBUG] GEMINI_API_KEY present:", !!process.env.GEMINI_API_KEY);
+console.log("[DEBUG] GOOGLE_API_KEY present:", !!process.env.GOOGLE_API_KEY);
+
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import agentHandler from './api/agent';
 import solveHandler from './api/solve';
-import dotenv from 'dotenv';
-import path from 'path';
-
-// Load environment variables from the local .env
-dotenv.config({ path: path.join(__dirname, '.env') });
 
 const app = express();
 app.use(cors());

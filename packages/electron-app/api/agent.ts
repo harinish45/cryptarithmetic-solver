@@ -1,7 +1,14 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import { LlmAgent, Runner, InMemorySessionService, FunctionTool, toStructuredEvents } from '@google/adk';
+import dotenv from 'dotenv';
+import path from 'path';
+
+// Load env vars at the very beginning to avoid hoisting issues
+dotenv.config();
+
+import { LlmAgent, Runner, InMemorySessionService, FunctionTool, toStructuredEvents, Gemini } from '@google/adk';
 import { solvePuzzle, parsePuzzle } from '@cryptarithmetic/solver-core';
 import type { PuzzleAST, Solution } from '@cryptarithmetic/shared';
+
 
 // ============================================================
 // Conversation Context & State Management
@@ -382,14 +389,19 @@ const contextTool = new FunctionTool({
     }
 });
 
-// ============================================================
-// Agent Configuration with Enhanced Instructions
-// ============================================================
+let runnerInstance: Runner | null = null;
+const sessionService = new InMemorySessionService();
 
-const agent = new LlmAgent({
-    name: 'puzzle_assistant',
-    description: 'An expert cryptarithmetic puzzle assistant with memory and context awareness.',
-    instruction: `You are an AI assistant in a Cryptarithmetic Solver app. 
+function getRunner(): Runner {
+    if (!runnerInstance) {
+        const agent = new LlmAgent({
+            name: 'puzzle_assistant',
+            model: new Gemini({
+                model: 'gemini-2.5-flash',
+                apiKey: process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || ""
+            }),
+            description: 'An expert cryptarithmetic puzzle assistant with memory and context awareness.',
+            instruction: `You are an AI assistant in a Cryptarithmetic Solver app. 
 
 YOUR CAPABILITIES:
 - Solve puzzles using solve_puzzle tool
@@ -420,16 +432,17 @@ BEHAVIOR:
 - When generating puzzles, try to vary difficulty
 
 Remember to check context before responding to ensure continuity!`,
-    tools: [solveTool, generatePuzzleTool, validatePuzzleTool, explainSolutionTool, contextTool]
-});
+            tools: [solveTool, generatePuzzleTool, validatePuzzleTool, explainSolutionTool, contextTool]
+        });
 
-// Session service
-const sessionService = new InMemorySessionService();
-const runner = new Runner({
-    appName: 'cryptarithmetic-solver',
-    agent,
-    sessionService
-});
+        runnerInstance = new Runner({
+            appName: 'cryptarithmetic-solver',
+            agent,
+            sessionService
+        });
+    }
+    return runnerInstance;
+}
 
 // ============================================================
 // API Handler with Enhanced Session Management
@@ -467,15 +480,39 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
         let resultText = "";
 
+        // Ensure ADK session exists in the service
+        const adkSession = await sessionService.getSession({
+            appName: 'cryptarithmetic-solver',
+            userId: "web-user",
+            sessionId
+        });
+
+        if (!adkSession) {
+            await sessionService.createSession({
+                appName: 'cryptarithmetic-solver',
+                userId: "web-user",
+                sessionId
+            });
+        }
+
         // Run agent with context
-        for await (const event of runner.runAsync({
+        for await (const event of getRunner().runAsync({
             userId: "web-user",
             sessionId,
             newMessage: newMessage as any
         })) {
-            for (const se of toStructuredEvents(event)) {
+            console.log(`[AGENT] Event from ${event.author || 'system'}`);
+            const structured = toStructuredEvents(event);
+            for (const se of structured) {
+                console.log(`  - ${se.type}`);
                 if (se.type === 'content') {
                     resultText += se.content;
+                } else if (se.type === 'error') {
+                    console.error("  [AGENT ERROR]", se.error);
+                } else if (se.type === 'tool_call') {
+                    console.log("  [AGENT TOOL CALL]", se.call);
+                } else if (se.type === 'tool_result') {
+                    console.log("  [AGENT TOOL RESULT]", se.result);
                 }
             }
         }

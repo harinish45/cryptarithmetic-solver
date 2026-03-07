@@ -1,0 +1,5 @@
+﻿[dotenv@17.3.1] injecting env (0) from .env -- tip: ΓÜí∩╕Å secrets for agents: https://dotenvx.com/as2
+[dotenv@17.3.1] injecting env (0) from .env -- tip: ≡ƒ¢á∩╕Å  run anywhere with `dotenvx run -- yourcommand`
+[DEBUG] GEMINI_API_KEY present: true
+[DEBUG] GOOGLE_API_KEY present: true
+Local ADK/API dev server running on http://localhost:3001
