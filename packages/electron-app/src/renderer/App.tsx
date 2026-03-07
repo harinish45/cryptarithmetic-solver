@@ -11,6 +11,7 @@ import { AlgorithmSelector } from './components/AlgorithmSelector';
 import { SolutionDisplay } from './components/SolutionDisplay';
 import { PerformanceStats } from './components/PerformanceStats';
 import { ExportButton } from './components/ExportButton';
+import { AgentChat } from './components/AgentChat';
 import { solvePuzzle as solvePuzzleDirect } from '@cryptarithmetic/solver-core';
 
 export function App() {
@@ -19,6 +20,7 @@ export function App() {
     const [maxSolutions, setMaxSolutions] = useState(10);
     const [result, setResult] = useState<SolverResult | null>(null);
     const [solving, setSolving] = useState(false);
+    const [isChatOpen, setIsChatOpen] = useState(false);
 
     const handleSolve = useCallback(async () => {
         if (!expression.trim() || solving) return;
@@ -86,8 +88,18 @@ export function App() {
                     <h1>⊕ Cryptarithmetic Solver</h1>
                     <span className="made-by" style={{ fontSize: '0.8rem', opacity: 0.7, marginLeft: '1rem' }}>Made by Harinish</span>
                 </div>
-                <span className="header-badge">v1.0.0</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                    <button
+                        onClick={() => setIsChatOpen(true)}
+                        style={{ background: 'linear-gradient(135deg, #8b5cf6, #3b82f6)', color: 'white', border: 'none', padding: '6px 12px', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold' }}
+                    >
+                        ✨ Ask AI
+                    </button>
+                    <span className="header-badge">v1.0.0</span>
+                </div>
             </header>
+
+            {isChatOpen && <AgentChat onClose={() => setIsChatOpen(false)} />}
 
             {/* Left: Puzzle Library */}
             <PuzzleLibrary
