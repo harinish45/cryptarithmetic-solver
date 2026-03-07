@@ -1,0 +1,38 @@
+{
+    "compilerOptions": {
+        "target": "ES2022",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "composite": true,
+        "lib": [
+            "ES2022"
+        ],
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
+        "declaration": true,
+        "sourceMap": true,
+        "outDir": "./dist",
+        "types": [
+            "node"
+        ],
+        "typeRoots": [
+            "./node_modules/@types",
+            "../../node_modules/@types"
+        ]
+    },
+    "include": [
+        "server.ts",
+        "api/**/*"
+    ],
+    "references": [
+        {
+            "path": "../solver-core"
+        },
+        {
+            "path": "../shared"
+        }
+    ]
+}
