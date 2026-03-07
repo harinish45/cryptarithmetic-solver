@@ -4,6 +4,7 @@
     "private": true,
     "main": "dist/main/main.js",
     "scripts": {
+        "prebuild": "cd ../.. && npm run build:all",
         "dev": "concurrently \"npm run dev:renderer\" \"npm run dev:electron\"",
         "dev:renderer": "vite",
         "dev:electron": "tsc -p tsconfig.main.json && electron .",

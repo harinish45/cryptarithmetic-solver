@@ -17,5 +17,13 @@
     },
     "include": [
         "src/main/**/*"
+    ],
+    "references": [
+        {
+            "path": "../solver-core"
+        },
+        {
+            "path": "../shared"
+        }
     ]
 }

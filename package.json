@@ -10,6 +10,8 @@
   ],
   "scripts": {
     "build": "npm run build --workspaces",
+    "build:all": "npm run build:shared && npm run build:core",
+    "build:shared": "npm run build -w packages/shared",
     "build:core": "npm run build -w packages/solver-core",
     "build:app": "npm run build -w packages/electron-app",
     "dev": "npm run dev -w packages/electron-app",
