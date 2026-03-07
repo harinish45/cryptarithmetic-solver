@@ -16,7 +16,11 @@
         "jsx": "react-jsx",
         "outDir": "./dist/renderer",
         "rootDir": "./src/renderer",
-        "types": []
+        "types": [
+            "node",
+            "react",
+            "react-dom"
+        ]
     },
     "include": [
         "src/renderer/**/*"
