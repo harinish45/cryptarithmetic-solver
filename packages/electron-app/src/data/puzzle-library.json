@@ -158,5 +158,133 @@
         "difficulty": "hard",
         "category": "Words",
         "knownSolutionCount": null
+    },
+    {
+        "id": "mult-01",
+        "title": "A * BC = DEF",
+        "expression": "A * BC = DEF",
+        "difficulty": "easy",
+        "category": "Multiplication",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "mult-02",
+        "title": "AB * C = DE",
+        "expression": "AB * C = DE",
+        "difficulty": "easy",
+        "category": "Multiplication",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "mult-03",
+        "title": "SIX * SEVEN = FORTY2",
+        "expression": "SIX * SEVEN = FORTY2",
+        "difficulty": "hard",
+        "category": "Multiplication",
+        "knownSolutionCount": 1
+    },
+    {
+        "id": "mult-04",
+        "title": "APPLE * PEAR = FRUIT",
+        "expression": "APPLE * PEAR = FRUIT",
+        "difficulty": "hard",
+        "category": "Multiplication",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "sub-01",
+        "title": "ABC - DE = FG",
+        "expression": "ABC - DE = FG",
+        "difficulty": "easy",
+        "category": "Subtraction",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "sub-02",
+        "title": "WHO - IS = HE",
+        "expression": "WHO - IS = HE",
+        "difficulty": "easy",
+        "category": "Subtraction",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "sub-03",
+        "title": "APPLE - GRAPE = FRUIT",
+        "expression": "APPLE - GRAPE = FRUIT",
+        "difficulty": "medium",
+        "category": "Subtraction",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "div-01",
+        "title": "ABC / A = BC",
+        "expression": "ABC / A = BC",
+        "difficulty": "easy",
+        "category": "Division",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "div-02",
+        "title": "XXY / X = YZ",
+        "expression": "XXY / X = YZ",
+        "difficulty": "medium",
+        "category": "Division",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "hard-02",
+        "title": "CAT + DOG = PET",
+        "expression": "CAT + DOG = PET",
+        "difficulty": "easy",
+        "category": "Animals",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "hard-03",
+        "title": "RED + BLUE = PURPLE",
+        "expression": "RED + BLUE = PURPLE",
+        "difficulty": "medium",
+        "category": "Colors",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "fun-01",
+        "title": "YES + NO = MAYBE",
+        "expression": "YES + NO = MAYBE",
+        "difficulty": "medium",
+        "category": "Fun",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "fun-02",
+        "title": "TOP + BOTTOM = WHOLE",
+        "expression": "TOP + BOTTOM = WHOLE",
+        "difficulty": "hard",
+        "category": "Fun",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "fun-03",
+        "title": "EARTH + MARS = PLANETS",
+        "expression": "EARTH + MARS = PLANETS",
+        "difficulty": "hard",
+        "category": "Space",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "fun-04",
+        "title": "ONE + TWO = THREE",
+        "expression": "ONE + TWO = THREE",
+        "difficulty": "medium",
+        "category": "Numbers",
+        "knownSolutionCount": null
+    },
+    {
+        "id": "fun-05",
+        "title": "CODE + HACK = PROGRAM",
+        "expression": "CODE + HACK = PROGRAM",
+        "difficulty": "hard",
+        "category": "Tech",
+        "knownSolutionCount": null
     }
 ]

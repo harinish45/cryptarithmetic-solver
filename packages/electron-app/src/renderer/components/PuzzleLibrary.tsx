@@ -16,6 +16,7 @@ interface PuzzleLibraryProps {
 export function PuzzleLibrary({ selectedExpression, onSelectPuzzle }: PuzzleLibraryProps) {
     const [search, setSearch] = useState('');
     const [filter, setFilter] = useState<Difficulty | 'all'>('all');
+    const [categoryFilter, setCategoryFilter] = useState<string>('all');
 
     const filtered = useMemo(() => {
         return puzzles.filter((p) => {
@@ -24,11 +25,21 @@ export function PuzzleLibrary({ selectedExpression, onSelectPuzzle }: PuzzleLibr
                 p.title.toLowerCase().includes(search.toLowerCase()) ||
                 p.expression.toLowerCase().includes(search.toLowerCase());
             const matchesFilter = filter === 'all' || p.difficulty === filter;
-            return matchesSearch && matchesFilter;
+            const matchesCategory = categoryFilter === 'all' || p.category === categoryFilter;
+            return matchesSearch && matchesFilter && matchesCategory;
         });
-    }, [search, filter]);
+    }, [search, filter, categoryFilter]);
 
     const difficulties: Array<Difficulty | 'all'> = ['all', 'easy', 'medium', 'hard'];
+
+    // Extract unique categories from puzzles
+    const categories = useMemo(() => {
+        const cats = new Set<string>();
+        puzzles.forEach(p => {
+            if (p.category) cats.add(p.category);
+        });
+        return ['all', ...Array.from(cats).sort()];
+    }, []);
 
     return (
         <nav className="sidebar">
@@ -44,16 +55,35 @@ export function PuzzleLibrary({ selectedExpression, onSelectPuzzle }: PuzzleLibr
                 />
             </div>
 
-            <div className="filter-chips">
-                {difficulties.map((d) => (
-                    <button
-                        key={d}
-                        className={`filter-chip ${filter === d ? 'active' : ''}`}
-                        onClick={() => setFilter(d)}
-                    >
-                        {d === 'all' ? 'All' : d.charAt(0).toUpperCase() + d.slice(1)}
-                    </button>
-                ))}
+            <div className="filter-section">
+                <div className="filter-label">Difficulty</div>
+                <div className="filter-chips">
+                    {difficulties.map((d) => (
+                        <button
+                            key={d}
+                            className={`filter-chip ${filter === d ? 'active' : ''}`}
+                            onClick={() => setFilter(d)}
+                        >
+                            {d === 'all' ? 'All' : d.charAt(0).toUpperCase() + d.slice(1)}
+                        </button>
+                    ))}
+                </div>
+            </div>
+
+            <div className="filter-section">
+                <div className="filter-label">Category</div>
+                <div className="filter-chips category-chips">
+                    {categories.slice(0, 6).map((cat) => (
+                        <button
+                            key={cat}
+                            className={`filter-chip ${categoryFilter === cat ? 'active' : ''}`}
+                            onClick={() => setCategoryFilter(cat)}
+                            title={cat}
+                        >
+                            {cat === 'all' ? 'All' : cat}
+                        </button>
+                    ))}
+                </div>
             </div>
 
             <div className="puzzle-list">
@@ -72,14 +102,23 @@ export function PuzzleLibrary({ selectedExpression, onSelectPuzzle }: PuzzleLibr
                         >
                             <div className="puzzle-item-title">{puzzle.title}</div>
                             <div className="puzzle-item-expr">{puzzle.expression}</div>
-                            <span
-                                className={`puzzle-item-badge badge-${puzzle.difficulty}`}
-                            >
-                                {puzzle.difficulty}
-                            </span>
+                            <div className="puzzle-item-meta">
+                                <span
+                                    className={`puzzle-item-badge badge-${puzzle.difficulty}`}
+                                >
+                                    {puzzle.difficulty}
+                                </span>
+                                {puzzle.category && (
+                                    <span className="puzzle-category">{puzzle.category}</span>
+                                )}
+                            </div>
                         </div>
                     ))
                 )}
+            </div>
+
+            <div className="library-footer">
+                <span>{puzzles.length} puzzles available</span>
             </div>
         </nav>
     );

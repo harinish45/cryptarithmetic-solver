@@ -60,6 +60,40 @@
     --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Light Theme */
+[data-theme='light'] {
+    --bg-primary: #f8fafc;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #e2e8f0;
+    --bg-surface: rgba(255, 255, 255, 0.8);
+    --bg-glass: rgba(255, 255, 255, 0.5);
+    --bg-hover: rgba(226, 232, 240, 0.6);
+    --bg-active: rgba(99, 102, 241, 0.1);
+
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --text-tertiary: #94a3b8;
+    --text-accent: #4f46e5;
+
+    --accent: #4f46e5;
+    --accent-bright: #6366f1;
+    --accent-glow: rgba(79, 70, 229, 0.2);
+
+    --success: #059669;
+    --success-bg: rgba(5, 150, 105, 0.1);
+    --error: #dc2626;
+    --error-bg: rgba(220, 38, 38, 0.1);
+    --warning: #d97706;
+    --warning-bg: rgba(217, 119, 6, 0.1);
+
+    --border: rgba(148, 163, 184, 0.2);
+    --border-accent: rgba(79, 70, 229, 0.3);
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
 /* ── Reset & Base ──────────────────────────────────────────── */
 
 *,
@@ -872,4 +906,222 @@ body {
         border-radius: 0 !important;
         border: none !important;
     }
+}
+
+/* ── Theme Toggle Button ───────────────────────────────────── */
+
+.theme-toggle {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+}
+
+.theme-toggle:hover {
+    background: var(--bg-hover);
+    border-color: var(--border-accent);
+}
+
+/* ── History Panel ─────────────────────────────────────────── */
+
+.history-panel {
+    border-top: 1px solid var(--border);
+    padding: 12px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.history-header h3 {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.history-clear {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.history-clear:hover {
+    background: var(--bg-hover);
+    color: var(--error);
+}
+
+.history-item {
+    padding: 8px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    margin-bottom: 4px;
+}
+
+.history-item:hover {
+    background: var(--bg-hover);
+}
+
+.history-item-expr {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-primary);
+}
+
+.history-item-time {
+    font-size: 10px;
+    color: var(--text-tertiary);
+    margin-top: 2px;
+}
+
+/* ── Share Button ─────────────────────────────────────────── */
+
+.share-btn {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 4px 10px;
+    cursor: pointer;
+    font-size: 12px;
+    color: var(--text-secondary);
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.share-btn:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+    border-color: var(--border-accent);
+}
+
+/* ── Statistics Dashboard ─────────────────────────────────── */
+
+.stats-dashboard {
+    background: var(--bg-surface);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    margin-top: 12px;
+    border: 1px solid var(--border);
+}
+
+.stats-dashboard h3 {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.stat-item {
+    background: var(--bg-primary);
+    padding: 10px;
+    border-radius: var(--radius-sm);
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent-bright);
+    font-family: var(--font-mono);
+}
+
+.stat-label {
+    font-size: 10px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-top: 2px;
+}
+
+/* ── Keyboard Shortcuts Hint ───────────────────────────────── */
+
+.shortcuts-hint {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    text-align: center;
+    margin-top: 8px;
+}
+
+.shortcuts-hint kbd {
+    background: var(--bg-tertiary);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+}
+
+/* ── Filter Section ───────────────────────────────────────── */
+
+.filter-section {
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.filter-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+}
+
+.category-chips {
+    max-height: 60px;
+    overflow-y: auto;
+}
+
+/* ── Library Footer ───────────────────────────────────────── */
+
+.library-footer {
+    padding: 10px 16px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    text-align: center;
+}
+
+/* ── Puzzle Category Tag ─────────────────────────────────── */
+
+.puzzle-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.puzzle-category {
+    font-size: 9px;
+    color: var(--text-tertiary);
+    background: var(--bg-tertiary);
+    padding: 1px 5px;
+    border-radius: 4px;
 }
