@@ -569,6 +569,7 @@ body {
     flex: 1;
     overflow-y: auto;
     padding: 16px;
+    min-height: 250px;
 }
 
 .results-body::-webkit-scrollbar {
@@ -751,17 +752,15 @@ body {
 .export-group {
     display: flex;
     gap: 6px;
-    padding: 12px 16px;
-    border-top: 1px solid var(--border);
 }
 
 .export-btn {
-    flex: 1;
+    flex: none;
     background: var(--bg-tertiary);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     color: var(--text-secondary);
-    padding: 6px 10px;
+    padding: 4px 10px;
     font-size: 12px;
     cursor: pointer;
     transition: all var(--transition-fast);
@@ -783,7 +782,7 @@ body {
     padding: 40px 20px;
     text-align: center;
     gap: 12px;
-    flex: 1;
+    min-height: 200px;
 }
 
 .empty-icon {
@@ -905,7 +904,11 @@ body {
         border-left: none;
         border-top: 1px solid var(--border);
         flex: none;
-        min-height: 250px;
+        overflow: visible;
+    }
+
+    .results-body {
+        overflow: visible;
     }
 
     .sidebar {
@@ -914,7 +917,7 @@ body {
         border-right: none;
         border-top: 1px solid var(--border);
         flex: none;
-        max-height: 400px;
+        overflow: visible;
     }
 
     /* Override inline styles for Agent Chat on mobile */

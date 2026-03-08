@@ -132,7 +132,7 @@ export function App() {
 
                 // Update stats
                 setAppStats(prev => ({
-                    totalSolved: prev.totalSolved + (res.success ? res.solutions.length : 0),
+                    totalSolved: prev.totalSolved + (res.success ? 1 : 0),
                     totalTimeMs: prev.totalTimeMs + res.stats.solveTimeMs,
                     puzzlesAttempted: prev.puzzlesAttempted + 1,
                 }));
@@ -162,7 +162,7 @@ export function App() {
 
                     // Update stats
                     setAppStats(prev => ({
-                        totalSolved: prev.totalSolved + (res.success ? res.solutions.length : 0),
+                        totalSolved: prev.totalSolved + (res.success ? 1 : 0),
                         totalTimeMs: prev.totalTimeMs + res.stats.solveTimeMs,
                         puzzlesAttempted: prev.puzzlesAttempted + 1,
                     }));
@@ -179,7 +179,7 @@ export function App() {
 
                     // Update stats
                     setAppStats(prev => ({
-                        totalSolved: prev.totalSolved + (res.success ? res.solutions.length : 0),
+                        totalSolved: prev.totalSolved + (res.success ? 1 : 0),
                         totalTimeMs: prev.totalTimeMs + res.stats.solveTimeMs,
                         puzzlesAttempted: prev.puzzlesAttempted + 1,
                     }));
@@ -409,7 +409,7 @@ export function App() {
             <aside className="results-panel">
                 <div className="results-header">
                     <h2>Results</h2>
-                    <div style={{ display: 'flex', gap: '8px' }}>
+                    <div className="header-actions" style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
                         <button
                             className="share-btn"
                             onClick={handleShare}
@@ -448,7 +448,7 @@ export function App() {
                             <div className="stat-label">Total Time (s)</div>
                         </div>
                         <div className="stat-item">
-                            <div className="stat-value">{appStats.puzzlesAttempted > 0 ? Math.round(appStats.totalSolved / appStats.puzzlesAttempted * 100) : 0}%</div>
+                            <div className="stat-value">{appStats.puzzlesAttempted > 0 ? Math.min(100, Math.round(appStats.totalSolved / appStats.puzzlesAttempted * 100)) : 0}%</div>
                             <div className="stat-label">Success Rate</div>
                         </div>
                     </div>
