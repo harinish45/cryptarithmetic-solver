@@ -13,6 +13,7 @@ import { PerformanceStats } from './components/PerformanceStats';
 import { ExportButton } from './components/ExportButton';
 import { AgentChat } from './components/AgentChat';
 import { solvePuzzle as solvePuzzleDirect } from '@cryptarithmetic/solver-core';
+import puzzlesData from '../data/puzzle-library.json';
 
 interface HistoryItem {
     expression: string;
@@ -42,6 +43,7 @@ export function App() {
         puzzlesAttempted: 0,
     });
     const [copied, setCopied] = useState(false);
+    const [hintMsg, setHintMsg] = useState<string | null>(null);
 
     // Load history and stats from localStorage on mount
     useEffect(() => {
@@ -259,6 +261,59 @@ export function App() {
         }
     }, [expression]);
 
+    const handleGeneratePuzzle = useCallback(() => {
+        const randomIdx = Math.floor(Math.random() * puzzlesData.length);
+        setExpression(puzzlesData[randomIdx].expression);
+        setResult(null);
+        setHintMsg(null);
+    }, []);
+
+    const handleGetHint = useCallback(async () => {
+        if (!expression.trim() || solving) return;
+
+        setHintMsg("Thinking...");
+        try {
+            let res;
+            if (window.solverAPI) {
+                res = await window.solverAPI.solvePuzzle({
+                    expression: expression.trim(),
+                    algorithm: 'hybrid',
+                    maxSolutions: 1,
+                });
+            } else if (import.meta.env.PROD) {
+                const response = await fetch('/api/solve', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        expression: expression.trim(),
+                        algorithm: 'hybrid',
+                        maxSolutions: 1
+                    })
+                });
+                res = await response.json();
+            } else {
+                res = solvePuzzleDirect(expression.trim(), 'hybrid', 1);
+            }
+
+            if (res.success && res.solutions.length > 0) {
+                const sol = res.solutions[0];
+                const keys = Object.keys(sol);
+                if (keys.length > 0) {
+                    const randomKey = keys[Math.floor(Math.random() * keys.length)];
+                    setHintMsg(`💡 Hint: ${randomKey} = ${sol[randomKey]}`);
+                } else {
+                    setHintMsg("No hint available.");
+                }
+            } else {
+                setHintMsg("No valid solution found.");
+            }
+        } catch (err) {
+            setHintMsg("Error generating hint.");
+        }
+
+        setTimeout(() => setHintMsg(null), 4000);
+    }, [expression, solving]);
+
     return (
         <div className="app">
             {/* Header */}
@@ -308,6 +363,22 @@ export function App() {
                             onChange={setAlgorithm}
                         />
                         <button
+                            className="secondary-btn"
+                            onClick={handleGeneratePuzzle}
+                            title="Generate random puzzle"
+                            disabled={solving}
+                        >
+                            🎲 Random
+                        </button>
+                        <button
+                            className="secondary-btn"
+                            onClick={handleGetHint}
+                            title="Get a hint"
+                            disabled={!expression.trim() || solving}
+                        >
+                            💡 Hint
+                        </button>
+                        <button
                             id="solve-button"
                             className={`solve-btn ${solving ? 'solving' : ''}`}
                             onClick={handleSolve}
@@ -324,8 +395,12 @@ export function App() {
                         </button>
                     </div>
 
-                    <div className="shortcuts-hint">
-                        Press <kbd>Ctrl</kbd> + <kbd>Enter</kbd> to solve
+                    <div className="shortcuts-hint" style={{ minHeight: '20px' }}>
+                        {hintMsg ? (
+                            <span style={{ color: 'var(--accent-bright)', fontWeight: 500 }}>{hintMsg}</span>
+                        ) : (
+                            <>Press <kbd>Ctrl</kbd> + <kbd>Enter</kbd> to solve</>
+                        )}
                     </div>
                 </div>
             </main>
