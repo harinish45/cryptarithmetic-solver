@@ -286,5 +286,13 @@
         "difficulty": "hard",
         "category": "Tech",
         "knownSolutionCount": null
+    },
+    {
+        "id": "tech-02",
+        "title": "MAC + PC = APPLE",
+        "expression": "MAC + PC = APPLE",
+        "difficulty": "hard",
+        "category": "Tech",
+        "knownSolutionCount": null
     }
 ]

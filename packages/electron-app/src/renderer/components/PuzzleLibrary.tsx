@@ -73,7 +73,7 @@ export function PuzzleLibrary({ selectedExpression, onSelectPuzzle }: PuzzleLibr
             <div className="filter-section">
                 <div className="filter-label">Category</div>
                 <div className="filter-chips category-chips">
-                    {categories.slice(0, 6).map((cat) => (
+                    {categories.map((cat) => (
                         <button
                             key={cat}
                             className={`filter-chip ${categoryFilter === cat ? 'active' : ''}`}
