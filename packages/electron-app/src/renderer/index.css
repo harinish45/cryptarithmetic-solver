@@ -36,6 +36,8 @@
     --error-glow: rgba(239, 68, 68, 0.2);
     --warning: #f59e0b;
     --warning-bg: rgba(245, 158, 11, 0.12);
+    --info: #3b82f6;
+    --info-bg: rgba(59, 130, 246, 0.12);
 
     --border: rgba(148, 163, 184, 0.1);
     --border-accent: rgba(99, 102, 241, 0.3);
@@ -95,6 +97,8 @@
     --error-bg: rgba(220, 38, 38, 0.1);
     --warning: #d97706;
     --warning-bg: rgba(217, 119, 6, 0.1);
+    --info: #2563eb;
+    --info-bg: rgba(37, 99, 235, 0.1);
 
     --border: rgba(148, 163, 184, 0.2);
     --border-accent: rgba(79, 70, 229, 0.3);
@@ -210,11 +214,14 @@ body {
 }
 
 .logo-icon {
-    font-size: 28px;
-    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
     background: var(--accent-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    border-radius: var(--radius-md);
+    color: white;
     filter: drop-shadow(0 2px 4px var(--accent-glow));
     animation: pulse-glow 3s ease-in-out infinite;
 }
@@ -283,7 +290,7 @@ body {
 
 .app-layout {
     display: grid;
-    grid-template-columns: 300px 1fr 360px;
+    grid-template-columns: 300px 1fr 380px;
     flex: 1;
     overflow: hidden;
     position: relative;
@@ -642,6 +649,35 @@ body {
     gap: 8px;
 }
 
+.toggle-steps-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 8px 14px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: all var(--transition-base);
+    font-family: var(--font-sans);
+}
+
+.toggle-steps-btn:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+    border-color: var(--border-accent);
+    transform: translateY(-1px);
+}
+
+.toggle-steps-btn.active {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+}
+
 .share-btn {
     display: inline-flex;
     align-items: center;
@@ -777,6 +813,300 @@ body {
     font-weight: 800;
     color: var(--text-primary);
     margin-top: 2px;
+}
+
+/* ── Step-by-Step Explanation ──────────────────────────────── */
+
+.steps-section {
+    margin-top: 24px;
+    animation: fadeSlideUp 0.5s var(--transition-bounce);
+}
+
+.step-by-step-container {
+    background: var(--bg-glass);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 24px;
+    backdrop-filter: blur(8px);
+}
+
+.step-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.step-header h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    flex: 1;
+}
+
+.step-count {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    background: var(--bg-tertiary);
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+}
+
+.steps-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.step-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all var(--transition-base);
+}
+
+.step-card:hover {
+    border-color: var(--border-accent);
+}
+
+.step-card.expanded {
+    border-color: var(--step-color, var(--accent));
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.step-header-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px;
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.step-header-row:hover {
+    background: var(--bg-hover);
+}
+
+.step-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding-top: 2px;
+}
+
+.step-dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.step-line {
+    width: 2px;
+    flex: 1;
+    background: var(--border);
+    margin-top: 8px;
+    min-height: 20px;
+}
+
+.step-card.expanded .step-line {
+    background: var(--step-color, var(--accent));
+    opacity: 0.3;
+}
+
+.step-content-preview {
+    flex: 1;
+    min-width: 0;
+}
+
+.step-title-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+}
+
+.step-number {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.step-action-badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    text-transform: capitalize;
+}
+
+.step-chevron {
+    margin-left: auto;
+    color: var(--text-tertiary);
+    transition: transform var(--transition-base);
+    flex-shrink: 0;
+}
+
+.step-chevron.expanded {
+    transform: rotate(180deg);
+}
+
+.step-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.4;
+}
+
+.step-details {
+    padding: 0 16px 16px 64px;
+    animation: expandDetails 0.3s var(--transition-base);
+}
+
+@keyframes expandDetails {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.step-description {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.step-highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.highlight-label,
+.mapping-label,
+.equation-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.highlight-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.highlight-chip {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-accent);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+}
+
+.step-mapping {
+    margin-bottom: 12px;
+}
+
+.mapping-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(55px, 1fr));
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.mapping-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 4px;
+    border-radius: var(--radius-md);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    transition: all var(--transition-base);
+}
+
+.mapping-item:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-1px);
+}
+
+.mapping-letter {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-accent);
+}
+
+.mapping-arrow {
+    font-size: 10px;
+    color: var(--text-tertiary);
+    margin: 2px 0;
+}
+
+.mapping-digit {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.step-equation {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    margin-top: 8px;
+}
+
+.equation-code {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--success);
+    text-align: center;
+    margin-top: 6px;
+    letter-spacing: 0.05em;
+}
+
+.step-by-step-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 32px;
+    color: var(--text-tertiary);
+    text-align: center;
+}
+
+.step-by-step-empty p {
+    font-size: 13px;
 }
 
 /* ── Stats Panel ───────────────────────────────────────────── */
@@ -969,7 +1299,7 @@ body {
 
 @media (max-width: 1200px) {
     .app-layout {
-        grid-template-columns: 260px 1fr 320px;
+        grid-template-columns: 260px 1fr 340px;
     }
 }
 
@@ -1070,5 +1400,9 @@ body {
 
     .stat-value {
         font-size: 18px;
+    }
+
+    .step-details {
+        padding: 0 16px 16px 16px;
     }
 }
