@@ -14,6 +14,7 @@ import { solveBruteForce } from './solvers/brute-force';
 import { solveBacktracking } from './solvers/backtracking';
 import { solveHybrid } from './solvers/hybrid';
 import { ac3 } from './solvers/ac3';
+import { solveWithSteps } from './solvers/step-by-step';
 
 export { parsePuzzle } from './parser';
 export { tokenize } from './tokenizer';
@@ -25,12 +26,14 @@ export { buildCSP, checkSolution, evaluateWord } from './constraint-builder';
  * @param expression - The puzzle expression, e.g. "SEND + MORE = MONEY"
  * @param algorithm - Which algorithm to use (default: 'hybrid')
  * @param maxSolutions - Maximum number of solutions to find (default: 10)
- * @returns SolverResult with solutions, stats, and error info
+ * @param includeSteps - Whether to include step-by-step educational explanations (default: true)
+ * @returns SolverResult with solutions, stats, steps, and error info
  */
 export function solvePuzzle(
     expression: string,
     algorithm: SolverAlgorithm = 'hybrid',
-    maxSolutions: number = 10
+    maxSolutions: number = 10,
+    includeSteps: boolean = true
 ): SolverResult {
     const startTime = performance.now();
 
@@ -41,52 +44,61 @@ export function solvePuzzle(
         let solutions: Solution[] = [];
         let nodesExplored = 0;
         let backtracks = 0;
+        let steps = undefined;
 
-        switch (algorithm) {
-            case 'brute-force': {
-                const result = solveBruteForce(puzzle, maxSolutions);
-                solutions = result.solutions;
-                nodesExplored = result.stats.nodesExplored;
-                backtracks = result.stats.backtracks;
-                break;
-            }
-
-            case 'ac3': {
-                // AC-3 alone only reduces domains — we still need backtracking
-                const reduced = ac3(csp.variables);
-                if (reduced === null) {
-                    solutions = [];
-                } else {
-                    const result = solveBacktracking(puzzle, reduced, maxSolutions);
+        if (includeSteps && algorithm === 'hybrid') {
+            // Use step-by-step solver for educational purposes
+            const result = solveWithSteps(puzzle, csp.variables, maxSolutions);
+            solutions = result.solutions;
+            nodesExplored = result.stats.nodesExplored;
+            backtracks = result.stats.backtracks;
+            steps = result.steps;
+        } else {
+            switch (algorithm) {
+                case 'brute-force': {
+                    const result = solveBruteForce(puzzle, maxSolutions);
                     solutions = result.solutions;
                     nodesExplored = result.stats.nodesExplored;
                     backtracks = result.stats.backtracks;
+                    break;
                 }
-                break;
-            }
 
-            case 'backtracking': {
-                const result = solveBacktracking(
-                    puzzle,
-                    csp.variables,
-                    maxSolutions
-                );
-                solutions = result.solutions;
-                nodesExplored = result.stats.nodesExplored;
-                backtracks = result.stats.backtracks;
-                break;
-            }
+                case 'ac3': {
+                    const reduced = ac3(csp.variables);
+                    if (reduced === null) {
+                        solutions = [];
+                    } else {
+                        const result = solveBacktracking(puzzle, reduced, maxSolutions);
+                        solutions = result.solutions;
+                        nodesExplored = result.stats.nodesExplored;
+                        backtracks = result.stats.backtracks;
+                    }
+                    break;
+                }
 
-            case 'hybrid': {
-                const result = solveHybrid(puzzle, csp.variables, maxSolutions);
-                solutions = result.solutions;
-                nodesExplored = result.stats.nodesExplored;
-                backtracks = result.stats.backtracks;
-                break;
-            }
+                case 'backtracking': {
+                    const result = solveBacktracking(
+                        puzzle,
+                        csp.variables,
+                        maxSolutions
+                    );
+                    solutions = result.solutions;
+                    nodesExplored = result.stats.nodesExplored;
+                    backtracks = result.stats.backtracks;
+                    break;
+                }
 
-            default:
-                throw new Error(`Unknown algorithm: ${algorithm}`);
+                case 'hybrid': {
+                    const result = solveHybrid(puzzle, csp.variables, maxSolutions);
+                    solutions = result.solutions;
+                    nodesExplored = result.stats.nodesExplored;
+                    backtracks = result.stats.backtracks;
+                    break;
+                }
+
+                default:
+                    throw new Error(`Unknown algorithm: ${algorithm}`);
+            }
         }
 
         const solveTimeMs = performance.now() - startTime;
@@ -103,6 +115,7 @@ export function solvePuzzle(
             success: solutions.length > 0,
             solutions,
             stats,
+            steps,
         };
     } catch (error) {
         const solveTimeMs = performance.now() - startTime;
