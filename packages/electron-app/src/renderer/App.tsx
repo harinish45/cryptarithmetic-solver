@@ -11,6 +11,7 @@ import { AlgorithmSelector } from './components/AlgorithmSelector';
 import { SolutionDisplay } from './components/SolutionDisplay';
 import { PerformanceStats } from './components/PerformanceStats';
 import { ExportButton } from './components/ExportButton';
+import { StepByStepExplanation } from './components/StepByStepExplanation';
 import { solvePuzzle as solvePuzzleDirect } from '@cryptarithmetic/solver-core';
 import puzzlesData from '../data/puzzle-library.json';
 
@@ -41,6 +42,7 @@ export function App() {
     });
     const [copied, setCopied] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [showSteps, setShowSteps] = useState(true);
     const inputRef = useRef<HTMLTextAreaElement>(null);
 
     // Load history and stats from localStorage on mount
@@ -173,7 +175,7 @@ export function App() {
                         success: res.success,
                     }, ...prev.slice(0, 49)]);
                 } else {
-                    const res = solvePuzzleDirect(expression.trim(), algorithm, maxSolutions);
+                    const res = solvePuzzleDirect(expression.trim(), algorithm, maxSolutions, true);
                     setResult(res);
                     if (!res.success) {
                         setError(res.error || 'No solution found for this puzzle.');
@@ -289,7 +291,13 @@ export function App() {
             {/* Header */}
             <header className="app-header">
                 <div className="header-left">
-                    <div className="logo-icon">⊕</div>
+                    <div className="logo-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
                     <div className="header-title-group">
                         <h1>Cryptarithmetic Solver</h1>
                         <span className="made-by">Crafted by Harinish</span>
@@ -307,7 +315,7 @@ export function App() {
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
                         )}
                     </button>
-                    <span className="version-badge">v2.0.0</span>
+                    <span className="version-badge">v2.1.0</span>
                 </div>
             </header>
 
@@ -402,6 +410,19 @@ export function App() {
                     <div className="results-header">
                         <h2>Solutions</h2>
                         <div className="header-actions">
+                            {result && result.success && result.steps && (
+                                <button
+                                    className={`toggle-steps-btn ${showSteps ? 'active' : ''}`}
+                                    onClick={() => setShowSteps(!showSteps)}
+                                    title="Toggle step-by-step explanation"
+                                >
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                                    </svg>
+                                    {showSteps ? 'Hide Steps' : 'Show Steps'}
+                                </button>
+                            )}
                             <button
                                 className="share-btn"
                                 onClick={handleShare}
@@ -427,6 +448,12 @@ export function App() {
 
                     <div className="results-body">
                         <SolutionDisplay result={result} solving={solving} />
+                        
+                        {result && result.success && result.steps && showSteps && (
+                            <div className="steps-section">
+                                <StepByStepExplanation steps={result.steps} />
+                            </div>
+                        )}
                     </div>
 
                     {result && result.stats.solveTimeMs > 0 && (
