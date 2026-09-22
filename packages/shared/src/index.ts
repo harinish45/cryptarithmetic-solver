@@ -52,11 +52,23 @@ export interface Solution {
     substituted: string; // e.g., "9567 + 1085 = 10652"
 }
 
+/** Step in the step-by-step explanation */
+export interface SolveStep {
+    stepNumber: number;
+    action: 'deduction' | 'assignment' | 'constraint' | 'backtrack' | 'verification' | 'conclusion';
+    title: string;
+    description: string;
+    mapping?: DigitMapping;
+    equation?: string;
+    highlight?: string[];
+}
+
 /** Full result of a solve operation */
 export interface SolverResult {
     success: boolean;
     solutions: Solution[];
     stats: SolveStats;
+    steps?: SolveStep[];
     error?: string;
 }
 
