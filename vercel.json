@@ -1,0 +1,16 @@
+{
+    "buildCommand": "cd packages/electron-app && npm run build",
+    "outputDirectory": "packages/electron-app/dist/renderer",
+    "framework": "vite",
+    "installCommand": "npm install",
+    "rewrites": [
+        {
+            "source": "/api/(.*)",
+            "destination": "/api/$1"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
+        }
+    ]
+}
