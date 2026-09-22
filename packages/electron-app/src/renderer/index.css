@@ -359,6 +359,112 @@ body {
     border-radius: var(--radius-xs);
 }
 
+/* ── Puzzle Input ──────────────────────────────────────────── */
+
+.puzzle-input-container {
+    width: 100%;
+}
+
+.puzzle-input-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.puzzle-input-label span {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.letter-count {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: var(--radius-full);
+}
+
+.letter-count.ok {
+    background: var(--success-bg);
+    color: var(--success);
+}
+
+.letter-count.warn {
+    background: var(--warning-bg);
+    color: var(--warning);
+}
+
+.letter-count.over {
+    background: var(--error-bg);
+    color: var(--error);
+}
+
+.puzzle-input {
+    width: 100%;
+    background: var(--bg-primary);
+    border: 2px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    color: var(--text-primary);
+    font-size: 22px;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 0.05em;
+    outline: none;
+    transition: all var(--transition-base);
+    resize: none;
+    min-height: 80px;
+}
+
+.puzzle-input:focus {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-glow);
+}
+
+.puzzle-input.valid {
+    border-color: var(--success);
+    box-shadow: 0 0 24px var(--success-glow);
+}
+
+.puzzle-input.invalid {
+    border-color: var(--error);
+    box-shadow: 0 0 24px var(--error-glow);
+}
+
+.puzzle-input::placeholder {
+    color: var(--text-tertiary);
+    font-weight: 400;
+    font-size: 18px;
+}
+
+/* ── Validation message ────────────────────────────────────── */
+
+.validation-msg {
+    font-size: 12px;
+    margin-top: 8px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: all var(--transition-fast);
+    font-weight: 500;
+}
+
+.validation-msg.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.validation-msg.error {
+    color: var(--error);
+}
+
+.validation-msg.success {
+    color: var(--success);
+}
+
 /* ── Controls Row ──────────────────────────────────────────── */
 
 .controls-row {
@@ -946,6 +1052,11 @@ body {
 
     .editor-card {
         padding: 20px;
+    }
+
+    .puzzle-input {
+        font-size: 18px;
+        padding: 14px 16px;
     }
 
     .mapping-grid {
