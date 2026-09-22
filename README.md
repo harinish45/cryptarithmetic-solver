@@ -1,10 +1,22 @@
-# 🧩 Cryptarithmetic Puzzle Solver & AI Constraint Laboratory
-> **High-performance TypeScript & Electron solver for Cryptarithmetic Constraint Satisfaction Problems (CSP) featuring Backtracking, Minimum Remaining Values (MRV), Forward Checking, and AC-3 Arc Consistency.**
+# 🧩 Cryptarithmetic Puzzle Solver
+
+> **High-performance TypeScript solver for Cryptarithmetic Constraint Satisfaction Problems (CSP) featuring Backtracking, Minimum Remaining Values (MRV), Forward Checking, and a premium, animated UI/UX.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?logo=typescript)](https://www.typescriptlang.org/)
-[![Monorepo: npm workspaces](https://img.shields.io/badge/Monorepo-Workspaces-purple.svg)]()
-[![Status: Active](https://img.shields.io/badge/Status-Active%20v1.0.0-brightgreen.svg)]()
+[![Vercel](https://img.shields.io/badge/Deployed-Vercel-black?logo=vercel)](https://vercel.com)
+
+---
+
+## ✨ Features
+
+- **🎨 Premium UI/UX**: Glassmorphism design, micro-animations, perfect rounded corners, and responsive layout
+- **⚡ High Performance**: Multiple solving algorithms (Hybrid, Backtracking, MRV, Forward Checking)
+- **🌐 Web & Desktop Ready**: Deployable on Vercel or run locally as an Electron app
+- **📊 Real-time Statistics**: Track solved puzzles, success rate, and performance metrics
+- **💾 Local History**: Automatically saves your recent puzzles and solving statistics
+- **🔗 Shareable Puzzles**: Generate shareable URLs for any puzzle
+- **🌓 Dark/Light Mode**: Beautiful theme switching with smooth transitions
 
 ---
 
@@ -14,31 +26,19 @@
 cryptarithmetic-solver/
 ├── packages/
 │   ├── solver-core/       # Core CSP algorithms: MRV, LCV, Forward Checking, Backtracking
-│   ├── electron-app/      # Cross-platform desktop interface with visual step-by-step solver
+│   ├── electron-app/      # Web/Electron interface with premium visual design
 │   └── shared/            # Common domain types, AST expression parser, and validator
+├── vercel.json            # Vercel deployment configuration
 └── package.json           # Workspace root
-```
-
-```mermaid
-graph TD
-    A["Input Equation: SEND + MORE = MONEY"] --> B[AST Parser & Letter Extractor]
-    B --> C[Constraint Satisfaction Problem - CSP Formulation]
-    C --> D[Variable Domains: Digits 0 - 9]
-    C --> E[All-Different Global Constraint]
-    C --> F[Leading Letter != 0 Constraint]
-    C --> G[Arithmetic Column Balance Constraints]
-    D & E & F & G --> H[Heuristic Search Engine: MRV + LCV + Forward Checking]
-    H --> I[Backtracking Search with State Pruning]
-    I -->|Valid Assignment Found| J["Solution: O=0, M=1, Y=2, E=5, N=6, D=7, R=8, S=9"]
 ```
 
 ---
 
 ## 🚀 Core Algorithmic Techniques
 
-* **Minimum Remaining Values (MRV):** Prioritizes assigning values to the variable with the fewest remaining legal choices, triggering failure branches as early as possible.
-* **Least Constraining Value (LCV):** Prefers values that rule out the fewest choices for neighboring variables in the constraint graph.
-* **Forward Checking & Arc Consistency (AC-3):** Propagates constraints across arithmetic columns after every assignment, pruning invalid search space branches.
+- **Minimum Remaining Values (MRV)**: Prioritizes assigning values to the variable with the fewest remaining legal choices
+- **Least Constraining Value (LCV)**: Prefers values that rule out the fewest choices for neighboring variables
+- **Forward Checking & Arc Consistency (AC-3)**: Propagates constraints across arithmetic columns after every assignment
 
 ---
 
@@ -51,24 +51,53 @@ cd cryptarithmetic-solver
 npm install
 ```
 
-### Running Solver Core Tests
+### Running Locally (Development)
 ```bash
-npm run test --workspace=packages/solver-core
+npm run dev
 ```
 
-### Launching Desktop UI
+### Building for Production
 ```bash
-npm run start --workspace=packages/electron-app
+npm run build
 ```
 
 ---
 
-## 🤖 Vibe Coding & Autonomous AI Tool Instructions
-* [`PRD.md`](./PRD.md) — Formal CSP definition and mathematical specifications.
-* [`TODO.md`](./TODO.md) — Atomic implementation checklist with unit test acceptance criteria.
-* [`AGENTS.md`](./AGENTS.md) — Algorithmic invariants and coding rules.
+## 🌐 Vercel Deployment
+
+This project is fully configured for seamless Vercel deployment:
+
+1. **Connect your GitHub repository** to Vercel
+2. Vercel will automatically detect the `vercel.json` configuration
+3. Click **Deploy** - that's it!
+
+The deployment includes:
+- Vite-optimized static assets
+- Serverless API routes for puzzle solving (`/api/solve`)
+- Automatic SPA routing fallbacks
+
+---
+
+## 🎮 How to Use
+
+1. **Enter a Puzzle**: Type your cryptarithmetic equation (e.g., `SEND + MORE = MONEY`)
+2. **Select Algorithm**: Choose your preferred solving strategy from the dropdown
+3. **Click Solve**: Hit the Solve button or press `Ctrl + Enter`
+4. **View Results**: See the step-by-step solution, letter mappings, and performance stats
+
+### Supported Operators
+- Addition: `+`
+- Subtraction: `-`
+- Multiplication: `*`
+- Division: `/`
+- Equality: `=`
 
 ---
 
 ## 📄 License
+
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+---
+
+**Crafted with ❤️ by Harinish**
