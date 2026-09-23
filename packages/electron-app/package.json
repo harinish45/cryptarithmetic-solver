@@ -10,7 +10,7 @@
         "dev:api": "tsx --watch --env-file=.env server.ts",
         "build": "npm run build:renderer && npm run build:api",
         "build:renderer": "vite build",
-        "build:api": "tsc -p tsconfig.server.json",
+        "build:api": "tsc -b tsconfig.server.json",
         "start": "NODE_ENV=production node dist/server.js",
         "start:dev": "tsx server.ts"
     },
