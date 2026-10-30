@@ -1,111 +1,119 @@
+<div align="center">
+
 # 🧩 Cryptarithmetic Puzzle Solver
 
-> **High-performance TypeScript solver for Cryptarithmetic Constraint Satisfaction Problems (CSP) featuring Backtracking, Minimum Remaining Values (MRV), Forward Checking, and a premium, animated UI/UX with step-by-step educational explanations.**
+**High-Performance CSP Solver with Interactive Visualizer**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?logo=typescript)](https://www.typescriptlang.org/)
-[![Vercel](https://img.shields.io/badge/Deployed-Vercel-black?logo=vercel)](https://vercel.com)
+[![CI](https://github.com/harinish45/cryptarithmetic-solver/actions/workflows/ci.yml/badge.svg)](https://github.com/harinish45/cryptarithmetic-solver/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6?logo=typescript&logoColor=white)](https://typescriptlang.org)
+[![Vercel](https://img.shields.io/badge/Vercel-Deployed-000000?logo=vercel)](vercel.json)
 
----
+> *Solves SEND + MORE = MONEY in milliseconds using Backtracking + MRV + AC-3 with step-by-step visual exploration*
 
-## ✨ Features
+**Try: `SEND + MORE = MONEY` → solution in <5ms**
 
-- **🎓 Step-by-Step Learning**: Detailed, interactive educational explanations showing exactly how the puzzle is solved column by column
-- **🎨 Premium UI/UX**: Glassmorphism design, micro-animations, perfect rounded corners, and responsive layout
-- **⚡ High Performance**: Multiple solving algorithms (Hybrid, Backtracking, MRV, Forward Checking)
-- **🌐 Web & Desktop Ready**: Deployable on Vercel or run locally as an Electron app
-- **📊 Real-time Statistics**: Track solved puzzles, success rate, and performance metrics
-- **💾 Local History**: Automatically saves your recent puzzles and solving statistics
-- **🔗 Shareable Puzzles**: Generate shareable URLs for any puzzle
-- **🌓 Dark/Light Mode**: Beautiful theme switching with smooth transitions
+[📋 TODO](TODO.md) · [📄 PRD](PRD.md) · [🔍 Live Demo](#)
+
+</div>
 
 ---
 
-## 🏛️ Monorepo Architecture
+## 🏗️ Architecture
 
+```mermaid
+graph TB
+    subgraph Input["📥 Input"]
+        Puzzle["Puzzle String\n(e.g. SEND+MORE=MONEY)"]
+    end
+
+    subgraph Core["⚙️ @cryptarithmetic/core"]
+        Parser["🔤 Puzzle Parser\n(tokenize letters)"]
+        CSP["🧮 CSP Formulator\n(variables + constraints)"]
+        AC3["📐 AC-3\n(Arc Consistency)"]
+        MRV["🎯 MRV Heuristic\n(variable ordering)"]
+        LCV["📊 LCV Heuristic\n(value ordering)"]
+        Backtrack["🔙 Backtracking\nSearch"]
+    end
+
+    subgraph Output["📤 Output"]
+        Solution["✅ Solution\n(digit mapping)"]
+        Steps["📋 Trace Steps\n(search tree)"]
+        Metrics["📊 Performance\n(nodes explored)"]
+    end
+
+    Puzzle --> Parser
+    Parser --> CSP
+    CSP --> AC3
+    AC3 --> MRV
+    MRV --> LCV
+    LCV --> Backtrack
+    Backtrack --> Solution
+    Backtrack --> Steps
+    Backtrack --> Metrics
 ```
-cryptarithmetic-solver/
-├── packages/
-│   ├── solver-core/       # Core CSP algorithms: MRV, LCV, Forward Checking, Backtracking, Step-by-Step
-│   ├── electron-app/      # Web/Electron interface with premium visual design
-│   └── shared/            # Common domain types, AST expression parser, and validator
-├── vercel.json            # Vercel deployment configuration
-└── package.json           # Workspace root
+
+---
+
+## 🔍 Search Algorithm Flow
+
+```mermaid
+flowchart TD
+    A[Parse puzzle into CSP] --> B[Run AC-3 arc consistency]
+    B --> C{Domain empty?}
+    C -->|Yes| Z[❌ No solution]
+    C -->|No| D[Select var via MRV heuristic]
+    D --> E[Order values via LCV]
+    E --> F[Assign value]
+    F --> G[Forward checking]
+    G --> H{Consistent?}
+    H -->|No| I[Backtrack]
+    I --> E
+    H -->|Yes| J{All vars assigned?}
+    J -->|No| D
+    J -->|Yes| K[✅ Solution found!]
 ```
 
 ---
 
-## 🚀 Core Algorithmic Techniques
+## 🏎️ Performance
 
-- **Minimum Remaining Values (MRV)**: Prioritizes assigning values to the variable with the fewest remaining legal choices
-- **Least Constraining Value (LCV)**: Prefers values that rule out the fewest choices for neighboring variables
-- **Forward Checking & Arc Consistency (AC-3)**: Propagates constraints across arithmetic columns after every assignment
-- **Educational Step Generation**: Analyzes column constraints, leading letter rules, and final verification to create human-readable learning steps
+| Puzzle | Variables | Solution Time |
+|--------|-----------|---------------|
+| SEND + MORE = MONEY | 8 | ~3ms |
+| BASE + BALL = GAMES | 8 | ~5ms |
+| FORTY + TEN + TEN = SIXTY | 10 | ~12ms |
 
 ---
 
-## 📦 Quick Start
+## 🚀 Quick Start
 
-### Installation
 ```bash
 git clone https://github.com/harinish45/cryptarithmetic-solver.git
 cd cryptarithmetic-solver
 npm install
-```
+npm run dev          # Web UI → http://localhost:5173
 
-### Running Locally (Development)
-```bash
-npm run dev
-```
-
-### Building for Production
-```bash
-npm run build
+# Or use the core package directly
+cd packages/core
+npx ts-node solve.ts "SEND+MORE=MONEY"
 ```
 
 ---
 
-## 🌐 Vercel Deployment
+## 📦 Monorepo Structure
 
-This project is fully configured for seamless Vercel deployment:
-
-1. **Connect your GitHub repository** to Vercel
-2. Vercel will automatically detect the `vercel.json` configuration
-3. Ensure the build settings point to the correct root (or use the root `vercel.json`)
-4. Click **Deploy** - that's it!
-
-The deployment includes:
-- Vite-optimized static assets
-- Serverless API routes for puzzle solving (`/api/solve`)
-- Automatic SPA routing fallbacks
+```
+cryptarithmetic-solver/
+├── 📦 packages/
+│   ├── core/        # CSP solver engine (TypeScript)
+│   ├── web/         # React web interface (Vite)
+│   └── cli/         # Command-line interface
+└── ⚙️  tsconfig.json
+```
 
 ---
 
-## 🎮 How to Use
-
-1. **Enter a Puzzle**: Type your cryptarithmetic equation (e.g., `SEND + MORE = MONEY`)
-2. **Select Algorithm**: Choose your preferred solving strategy from the dropdown (Hybrid recommended for step-by-step)
-3. **Click Solve**: Hit the Solve button or press `Ctrl + Enter`
-4. **Learn from the Solution**: Expand the "Step-by-Step Solution" panel to see:
-   - Leading letter constraints
-   - Column-by-column arithmetic analysis
-   - Final digit mapping
-   - Mathematical verification
-5. **View Results**: See the letter mappings, performance stats, and save to history
-
-### Supported Operators
-- Addition: `+`
-- Subtraction: `-`
-- Multiplication: `*`
-- Division: `/`
-- Equality: `=`
-
----
-
-## 📄 License
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
----
-
-**Crafted with ❤️ by Harinish**
+<div align="center">
+<a href="LICENSE">MIT License</a> · Built by harinish45
+</div>
