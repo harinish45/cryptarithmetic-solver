@@ -27,8 +27,8 @@ export function solveHybrid(
     variables: CSPVariable[],
     maxSolutions: number = 1
 ): { solutions: Solution[]; stats: HybridStats } {
-    // Phase 1: AC-3 domain reduction
-    const reducedVars = ac3(variables);
+    // Phase 1: AC-3 domain reduction with puzzle constraints
+    const reducedVars = ac3(variables, puzzle);
 
     if (reducedVars === null) {
         return {

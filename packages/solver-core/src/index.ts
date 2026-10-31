@@ -19,6 +19,11 @@ import { solveWithSteps } from './solvers/step-by-step';
 export { parsePuzzle } from './parser';
 export { tokenize } from './tokenizer';
 export { buildCSP, checkSolution, evaluateWord } from './constraint-builder';
+export { ac3 } from './solvers/ac3';
+export { solveBacktracking } from './solvers/backtracking';
+export { solveHybrid } from './solvers/hybrid';
+export { solveBruteForce } from './solvers/brute-force';
+export { solveWithSteps } from './solvers/step-by-step';
 
 /**
  * Solve a cryptarithmetic puzzle.
@@ -64,7 +69,7 @@ export function solvePuzzle(
                 }
 
                 case 'ac3': {
-                    const reduced = ac3(csp.variables);
+                    const reduced = ac3(csp.variables, puzzle);
                     if (reduced === null) {
                         solutions = [];
                     } else {

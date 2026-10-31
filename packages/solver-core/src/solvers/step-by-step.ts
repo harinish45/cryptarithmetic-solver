@@ -5,13 +5,10 @@
 import {
     PuzzleAST,
     CSPVariable,
-    DigitMapping,
     Solution,
     SolveStep,
 } from '@cryptarithmetic/shared';
-import { checkSolution } from '../constraint-builder';
-import { solveBacktracking } from './backtracking';
-import { formatSubstitution } from './brute-force';
+import { solveHybrid } from './hybrid';
 
 /**
  * Solves a cryptarithmetic puzzle and generates step-by-step educational explanations.
@@ -39,7 +36,7 @@ export function solveWithSteps(
             stepNumber: stepNumber++,
             action: 'constraint',
             title: 'Leading Letter Constraint',
-            description: `The letters ${puzzle.leadingLetters.map(l => `'${l}'`).join(', ')} appear at the start of words, so they cannot be 0. Their possible values are 1-9.`,
+            description: `The letters ${puzzle.leadingLetters.map((l) => `'${l}'`).join(', ')} appear at the start of words, so they cannot be 0. Their possible values are 1-9.`,
             highlight: puzzle.leadingLetters,
         });
     }
@@ -50,17 +47,18 @@ export function solveWithSteps(
             stepNumber: stepNumber++,
             action: 'deduction',
             title: 'Column-by-Column Analysis',
-            description: 'We analyze the puzzle from right to left (units to highest place value), keeping track of any carry-over to the next column.',
+            description:
+                'We analyze the puzzle from right to left (units to highest place value), keeping track of any carry-over to the next column.',
         });
 
         const operands = puzzle.operands;
         const result = puzzle.result;
-        const maxLen = Math.max(result.length, ...operands.map(o => o.length));
+        const maxLen = Math.max(result.length, ...operands.map((o) => o.length));
 
         for (let col = 0; col < maxLen; col++) {
             const resultIdx = result.length - 1 - col;
             const resultLetter = resultIdx >= 0 ? result[resultIdx] : null;
-            
+
             const colLetters: string[] = [];
             for (const op of operands) {
                 const opIdx = op.length - 1 - col;
@@ -70,41 +68,51 @@ export function solveWithSteps(
             }
             if (resultLetter) colLetters.push(resultLetter);
 
-            const uniqueColLetters = [...new Set(colLetters)].filter(Boolean) as string[];
-            
+            const uniqueColLetters = [
+                ...new Set(colLetters),
+            ].filter(Boolean) as string[];
+
             if (uniqueColLetters.length > 0) {
-                const placeName = col === 0 ? 'units' : col === 1 ? 'tens' : col === 2 ? 'hundreds' : `10^${col}`;
+                const placeName =
+                    col === 0
+                        ? 'units'
+                        : col === 1
+                        ? 'tens'
+                        : col === 2
+                        ? 'hundreds'
+                        : `10^${col}`;
                 steps.push({
                     stepNumber: stepNumber++,
                     action: 'constraint',
                     title: `Column Constraint: ${placeName.charAt(0).toUpperCase() + placeName.slice(1)} Place`,
-                    description: `In the ${placeName} column, the sum of ${uniqueColLetters.slice(0, -1).map(l => `'${l}'`).join(' + ')}${uniqueColLetters.length > 1 ? ' plus any carry' : ''} must equal '${resultLetter}' (plus 10 × carry to next column).`,
+                    description: `In the ${placeName} column, the sum of ${uniqueColLetters.slice(0, -1).map((l) => `'${l}'`).join(' + ')}${uniqueColLetters.length > 1 ? ' plus any carry' : ''} must equal '${resultLetter}' (plus 10 × carry to next column).`,
                     highlight: uniqueColLetters,
                 });
             }
         }
     }
 
-    // Step 4: Run the actual solver
+    // Step 4: Run the actual solver (Hybrid: AC-3 + Backtracking with forward checking & MRV/LCV)
     steps.push({
         stepNumber: stepNumber++,
         action: 'deduction',
-        title: 'Applying Constraint Satisfaction',
-        description: 'Using backtracking with forward checking, we systematically try valid digit assignments while respecting all constraints.',
+        title: 'Applying Constraint Satisfaction & AC-3',
+        description:
+            'Using AC-3 domain reduction followed by backtracking with forward checking and MRV/LCV heuristics, we systematically find valid assignments.',
     });
 
-    const result = solveBacktracking(puzzle, variables, maxSolutions);
+    const result = solveHybrid(puzzle, variables, maxSolutions);
 
     if (result.solutions.length > 0) {
         const solution = result.solutions[0];
-        
+
         // Step 5: Show the final mapping
-        const mappingEntries = Object.entries(solution.mapping).sort((a, b) => a[0].localeCompare(b[0]));
         steps.push({
             stepNumber: stepNumber++,
             action: 'assignment',
             title: 'Final Digit Assignment',
-            description: 'After exploring the constraint space, we found the following valid assignment:',
+            description:
+                'After exploring the constraint space, we found the following valid assignment:',
             mapping: solution.mapping,
             highlight: puzzle.uniqueLetters,
         });
@@ -129,13 +137,17 @@ export function solveWithSteps(
             stepNumber: stepNumber++,
             action: 'conclusion',
             title: 'No Solution Found',
-            description: 'After exhaustively searching all valid digit combinations, no solution satisfies all constraints. The puzzle may be unsolvable as written.',
+            description:
+                'After exhaustively searching all valid digit combinations, no solution satisfies all constraints. The puzzle may be unsolvable as written.',
         });
     }
 
     return {
         solutions: result.solutions,
         steps,
-        stats: result.stats,
+        stats: {
+            nodesExplored: result.stats.nodesExplored,
+            backtracks: result.stats.backtracks,
+        },
     };
 }
