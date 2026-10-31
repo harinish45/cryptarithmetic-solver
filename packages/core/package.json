@@ -1,0 +1,21 @@
+{
+  "name": "@cryptarithmetic/core",
+  "version": "1.0.0",
+  "description": "CSP solver engine for cryptarithmetic puzzles",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -b",
+    "test": "npm run test -w packages/solver-core",
+    "solve": "ts-node solve.ts"
+  },
+  "dependencies": {
+    "@cryptarithmetic/shared": "1.0.0",
+    "@cryptarithmetic/solver-core": "1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.0"
+  }
+}

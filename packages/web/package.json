@@ -1,0 +1,16 @@
+{
+  "name": "@cryptarithmetic/web",
+  "version": "1.0.0",
+  "description": "Web interface for cryptarithmetic solver",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "dev": "npm run dev -w packages/electron-app",
+    "build": "npm run build -w packages/electron-app"
+  },
+  "dependencies": {
+    "@cryptarithmetic/electron-app": "1.0.0",
+    "@cryptarithmetic/shared": "1.0.0",
+    "@cryptarithmetic/solver-core": "1.0.0"
+  }
+}

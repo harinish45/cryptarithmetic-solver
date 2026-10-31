@@ -26,6 +26,12 @@
             "path": "./packages/solver-core"
         },
         {
+            "path": "./packages/core"
+        },
+        {
+            "path": "./packages/cli"
+        },
+        {
             "path": "./packages/electron-app/tsconfig.json"
         },
         {
